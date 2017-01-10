@@ -12,6 +12,8 @@ visited = []
 driver = webdriver.Chrome()
 base_url = "https://www.perimeterx.com/"
 
+
+#get addr, go to it and return a collect with all links from it
 def get_links(addr):
     tovisit = []
     links = visit_link(addr)
@@ -22,6 +24,9 @@ def get_links(addr):
                 tovisit.append(link_addr)
     return tovisit
 
+#get addr_list and go over it. if there are valid
+#links in it, start process on each one of them,
+#else nav back to previous page
 def visit_all_links(addr_list):
     if len(addr_list) > 1:
         for link in addr_list:
@@ -29,11 +34,18 @@ def visit_all_links(addr_list):
     else:
          driver.execute_script("window.history.go(-1)")
 
+#visit addr, add to visited list print
+#three first scentances, and return all
+#valid links on page
 def visit_link(addr):
     if not (addr in visited):
         driver.get(addr)
         visited.append(addr)
-        print addr
+        sents = driver.find_elements_by_xpath("//*[text()]")
+        i = 3
+        while i:
+            print sents[i].text
+            i-=1
         return driver.find_elements_by_xpath("//a[@href]")
 
 def main():
