@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-"""main.py, By Doron Smoliansky, 2017-1-10
+"""first.py, By Doron Smoliansky, 2017-1-10
 This program crawls through base_url and its sub links
 """
 
