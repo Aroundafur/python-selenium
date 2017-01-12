@@ -26,7 +26,7 @@ def go_to_checkout():
     form.find_element_by_xpath(".//*[@name='save']").click()
 
 
-#adjust balance according to actual cart summary, there are discounts that received only in checkout
+#adjust balance according to actual cart summary, there are discounts that are received only in checkout
 #go through products that are in stock, add to cart
 #continue till max_price achieved or all products in category were seen
 def add_products_to_cart():
