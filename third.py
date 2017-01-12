@@ -1,6 +1,12 @@
+#!/usr/bin/env python
 import requests
 from datetime import datetime, timedelta
-import json
+
+"""second.py, By Doron Smoliansky, 2017-1-10
+This program crawls through base_url and its sub links
+to fill the cart till max_price achieved
+"""
+
 
 
 class MyError(Exception):
