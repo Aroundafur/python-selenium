@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+# encoding=utf8
+
 
 """first.py, By Doron Smoliansky, 2017-1-10
 This program crawls through base_url and its sub links
@@ -6,6 +8,8 @@ This program crawls through base_url and its sub links
 
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+from selenium.common.exceptions import NoSuchElementException
+
 
 
 visited = []
@@ -13,45 +17,71 @@ driver = webdriver.Chrome()
 base_url = "https://www.perimeterx.com/"
 
 
-#get addr, go to it and return a collect with all links from it
 def get_links(addr):
+    """return all links on page
+
+    """
+    visit_link(addr)
     tovisit = []
-    links = visit_link(addr)
+    links = driver.find_elements_by_xpath("//a[@href]")
     if links:
         for link in links:
             link_addr = link.get_attribute("href")
             if base_url in link_addr:
-                tovisit.append(link_addr)
+                if '#' in link_addr:
+                    link_addr = link_addr.split('#')[0]
+                if not (link_addr in visited):
+                    tovisit.append(link_addr)
+    tovisit.pop(0)
     return tovisit
 
-#get addr_list and go over it. if there are valid
-#links in it, start process on each one of them,
-#else nav back to previous page
-def visit_all_links(addr_list):
-    if len(addr_list) > 1:
-        for link in addr_list:
-            visit_all_links(get_links(link))
-    else:
-         driver.execute_script("window.history.go(-1)")
 
-#visit addr, add to visited list print
-#three first scentances, and return all
-#valid links on page
+def splitParagraphIntoSentences(paragraphs):
+    ''' break a paragraph into sentences
+        and return a list '''
+    import re
+    sentences = []
+    for paragraph in paragraphs:
+        split_paragraph = re.split(',.?',paragraph.text)
+        i = 0
+        while i < len(split_paragraph):
+            p = split_paragraph[i]
+            if len(sentences) ==     3:
+                return sentences
+            elif p:
+                sentences.append(p)
+            i+=1
+
 def visit_link(addr):
+    """Go to link addr, mark as "visited",
+       get 3 santences from visited page
+    """
+
     if not (addr in visited):
+        print addr
         driver.get(addr)
         visited.append(addr)
-        sents = driver.find_elements_by_xpath("//*[text()]")
-        i = 3
-        while i:
-            print sents[i].text
-            i-=1
-        return driver.find_elements_by_xpath("//a[@href]")
+        try:
+            paragraph = driver.find_elements_by_xpath("//body//p[text()]")
+            paragraph = splitParagraphIntoSentences(paragraph)
+            if paragraph is not None:
+                for p in paragraph:
+                    print p
+            else:
+                print "No sentences on this page. ($x('//body//p[text()]') = []])"
+        except NoSuchElementException:
+            pass
 
-def main():
-    visit_all_links(get_links(base_url))
-    driver.close()
 
+
+def visit_all_links(url):
+    """visit all links on page
+       visit all links on sub pages
+    """
+    for i in get_links(url):
+        for j in get_links(i):
+            visit_link(j)
 
 if __name__=="__main__":
-    main()
+    visit_all_links(base_url)
+    driver.close()

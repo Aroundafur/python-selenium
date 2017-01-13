@@ -17,8 +17,10 @@ max_price = 500
 
 
 
-#just go to checkout
 def go_to_checkout():
+    """
+    just go to checkout
+    """
     driver.get('https://checkout.iherb.com/transactions/checkout')
     form = driver.find_element_by_xpath("//*[@id='login-password-form']")
     form.find_element_by_xpath(".//*[@id='UserName']").send_keys('test@perimeterx.com')
@@ -26,10 +28,13 @@ def go_to_checkout():
     form.find_element_by_xpath(".//*[@name='save']").click()
 
 
-#adjust balance according to actual cart summary, there are discounts that are received only in checkout
-#go through products that are in stock, add to cart
-#continue till max_price achieved or all products in category were seen
+
 def add_products_to_cart():
+    """
+    adjust balance according to actual cart summary, there are discounts that are received only in checkout
+    go through products that are in stock, add to cart
+    continue till max_price achieved or all products in category were seen
+    """
     balance = max_price
     while balance <= max_price:
         wait = WebDriverWait(driver, 5)
@@ -49,7 +54,7 @@ def add_products_to_cart():
             except NoSuchElementException:
                 continue
         pagination_last = driver.find_elements_by_xpath("//*[@class='pagination-link']")
-        pagination_last = pagination_last[len(pagination_last)-1].get_attribute('data-url')
+        pagination_last = pagination_last[-1].get_attribute('data-url')
         next_page = driver.find_element_by_xpath("//*[@class='pagination-next']").get_attribute('data-url')
         if next_page != pagination_last:
             driver.get(next_page)

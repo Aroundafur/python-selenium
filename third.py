@@ -1,10 +1,14 @@
 #!/usr/bin/env python
 import requests
+import json
 from datetime import datetime, timedelta
 
-"""second.py, By Doron Smoliansky, 2017-1-10
-This program crawls through base_url and its sub links
-to fill the cart till max_price achieved
+
+"""third.py, By Doron Smoliansky, 2017-1-10
+program creates API call, and runs tests 3 tests:
+1. valid requests that receive a valid response
+2. Invalid request for timestamps out of range
+3. Invalid request for threshold out of range
 """
 
 
@@ -60,7 +64,7 @@ def get(rtype = "socket_ip", rip_address = "81.82.81.82", url = 'http://portal-s
     except MyError as e:
         print e.value
 
-    if(validate_times(start_time, end_time) and validate_threshold(threshold)):
+    if(validate_times(start_time, end_time) and validate_threshold(threshold) and validate_type(rtype)and validate_value(rip_address)):
         headers = {
             'Authorization': 'Bearer ' + rtoken,
             "Content-Type": "application/json",
@@ -77,6 +81,38 @@ def get(rtype = "socket_ip", rip_address = "81.82.81.82", url = 'http://portal-s
             }
         }
         print requests.get(url, data=json.dumps(headers['data']), headers=headers).status_code
+
+def validate_type(rtype="socket_ip"):
+    """Returns the True if the given type is valid, else return False.
+
+    >>> validate_type("socket_ip")
+    True
+    >>> validate_type("forward_ip")
+    True
+    >>> validate_type("meow")
+    False
+    """
+    types = ['socket_ip', 'forward_ip']
+    if rtype in types:
+        return True
+    return False
+
+def validate_value(rip_address="0.0.0.0"):
+    """Returns the True if the value is a valid ip address, else return False.
+
+    >>> validate_value("0.0.0.0")
+    True
+    >>> validate_value("woof")
+    False
+
+    """
+    import socket
+    try:
+        socket.inet_aton(rip_address)
+    except socket.error:
+        return False
+    else:
+        return True
 
 def validate_threshold(threshold=60):
     """Returns the True if the threshold is valid, else throw exception.
