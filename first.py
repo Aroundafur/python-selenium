@@ -19,7 +19,10 @@ base_url = "https://www.perimeterx.com/"
 
 def get_links(addr):
     """return all links on page
-
+       but don't return:
+       anything out of the domain, e.g. facebook, tweeter, etc
+       # pages
+       pop(0) - remove mangaled base_url (has some block)
     """
     visit_link(addr)
     tovisit = []
@@ -38,7 +41,7 @@ def get_links(addr):
 
 def splitParagraphIntoSentences(paragraphs):
     ''' break a paragraph into sentences
-        and return a list '''
+        and return a list of three collected sentences from a page.'''
     import re
     sentences = []
     for paragraph in paragraphs:
@@ -46,15 +49,16 @@ def splitParagraphIntoSentences(paragraphs):
         i = 0
         while i < len(split_paragraph):
             p = split_paragraph[i]
-            if len(sentences) ==     3:
+            if len(sentences) == 3:
                 return sentences
             elif p:
                 sentences.append(p)
             i+=1
 
 def visit_link(addr):
-    """Go to link addr, mark as "visited",
-       get 3 santences from visited page
+    """Go to link addr
+       mark as "visited"
+       print 3 santences from visited page
     """
 
     if not (addr in visited):
