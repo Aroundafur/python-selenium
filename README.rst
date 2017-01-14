@@ -31,6 +31,7 @@ program creates API call, and runs tests 3 tests:
 3. Invalid request for threshold out of range
 
 tests are made with doctest - tests are written as documentation
+tests passed when there's no error
 """
 
 run with: python third.py
