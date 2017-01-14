@@ -1,19 +1,24 @@
 # python-selenium
 
 
+unpack gzip file
+cd to main folder
+
 # install dependencies
-
-run python setup.py
-
-or manually:
-
 make sure you have pip installed
 
 https://pip.pypa.io/en/stable/installing/
 
-make sure you have selenium installed
+run pip install .
 
-pip install selenium
+or manually:
+
+pip install <requirement>
+
+according to setup.py
+install_requires=[
+       'selenium', ...
+   ]
 
 
 #first.py, By Doron Smoliansky, 2017-1-10
