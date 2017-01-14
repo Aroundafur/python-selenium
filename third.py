@@ -9,6 +9,8 @@ program creates API call, and runs tests 3 tests:
 1. valid requests that receive a valid response
 2. Invalid request for timestamps out of range
 3. Invalid request for threshold out of range
+
+tests are made with doctest - tests are written as documentation
 """
 
 
@@ -121,7 +123,7 @@ def validate_threshold(threshold=60):
     True
 
     """
-    if threshold > 0 and threshold < 100:
+    if threshold >= 0 and threshold <= 100:
         return True
     else:
         raise MyError("threshold - number in the range of 0-100")

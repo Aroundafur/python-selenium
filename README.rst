@@ -30,8 +30,7 @@ program creates API call, and runs tests 3 tests:
 2. Invalid request for timestamps out of range
 3. Invalid request for threshold out of range
 
-tests are made with doctest - tests are written as documentation
-tests passed when there's no error
+tests are made with doctest module - and written as documentation
 """
 
-run with: python third.py
+run with: python third.py -v

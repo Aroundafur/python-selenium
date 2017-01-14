@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # encoding=utf8
+import re
 
 
 """first.py, By Doron Smoliansky, 2017-1-10
@@ -39,15 +40,14 @@ def get_links(addr):
     return tovisit
 
 
-def splitParagraphIntoSentences(paragraphs):
+def split_paragraph_into_sentences(paragraphs):
     ''' break a paragraph into sentences
         and return a list of three collected sentences from a page.'''
-    import re
     sentences = []
     for paragraph in paragraphs:
-        split_paragraph = re.split(',.?',paragraph.text)
-        i = 0
-        while i < len(split_paragraph):
+        pat = re.compile(r'([A-Z][^\.!?]*[\.!?])', re.M)
+        split_paragraph = pat.findall(paragraph.text)
+        for i in range(0, len(split_paragraph)):
             p = split_paragraph[i]
             if len(sentences) == 3:
                 return sentences
@@ -58,7 +58,7 @@ def splitParagraphIntoSentences(paragraphs):
 def visit_link(addr):
     """Go to link addr
        mark as "visited"
-       print 3 santences from visited page
+       print 3 santences from visited page (considering page has <p></p> content)
     """
 
     if not (addr in visited):
@@ -67,7 +67,7 @@ def visit_link(addr):
         visited.append(addr)
         try:
             paragraph = driver.find_elements_by_xpath("//body//p[text()]")
-            paragraph = splitParagraphIntoSentences(paragraph)
+            paragraph = split_paragraph_into_sentences(paragraph)
             if paragraph is not None:
                 for p in paragraph:
                     print p
