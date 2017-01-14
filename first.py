@@ -23,7 +23,7 @@ def get_links(addr):
        but don't return:
        anything out of the domain, e.g. facebook, tweeter, etc
        # pages
-       pop(0) - remove mangaled base_url (has some block)
+       pop(0) - remove base_url (duplication)
     """
     visit_link(addr)
     tovisit = []
@@ -42,7 +42,8 @@ def get_links(addr):
 
 def split_paragraph_into_sentences(paragraphs):
     ''' break a paragraph into sentences
-        and return a list of three collected sentences from a page.'''
+        and return a list of three collected sentences from a page.
+    '''
     sentences = []
     for paragraph in paragraphs:
         pat = re.compile(r'([A-Z][^\.!?]*[\.!?])', re.M)
@@ -59,6 +60,13 @@ def visit_link(addr):
     """Go to link addr
        mark as "visited"
        print 3 santences from visited page (considering page has <p></p> content)
+
+    >>> visit_link('https://www.perimeterx.com/bot-defender')
+    https://www.perimeterx.com/bot-defender
+    PerimeterX Bot Defender is an easy-to-deploy and highly scalable service that protects websites from automated attacks.
+    Site owners face ever increasing threats: content or price-scraping bots that steal content, methodical scans for any site vulnerabilities, brute force attacks for logins or commerce, and click fraud wasting your advertising budget, among others.
+    Bot attacks are problematic as both volume and sophistication of attacks continue to rise.
+    >>> driver.close()
     """
 
     if not (addr in visited):
@@ -87,5 +95,7 @@ def visit_all_links(url):
             visit_link(j)
 
 if __name__=="__main__":
+    # import doctest
+    # doctest.testmod()
     visit_all_links(base_url)
     driver.close()
