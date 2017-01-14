@@ -2,8 +2,9 @@
 
 """second.py, By Doron Smoliansky, 2017-1-10
 This program crawls through base_url and its sub links
-to fill the cart till max_price achieved
+to fill the cart till max_price achieved using selenium
 """
+
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
