@@ -15,7 +15,7 @@ from selenium.common.exceptions import NoSuchElementException
 
 visited = []
 driver = webdriver.Chrome()
-base_url = "https://www.perimeterx.com/"
+base_url = ""
 
 
 def get_links(addr):
