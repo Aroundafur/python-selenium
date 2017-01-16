@@ -21,34 +21,32 @@ class MyError(Exception):
     def __str__(self):
         return repr(self.value)
 N = 14
-rtoken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzY29wZXMiOlsicmlza19zY29yZSIsInJlc3RfYXBpIl0sImlhd\
-CI6MTQ2MzQxNDY2NSwic3ViIjoiUFgyMDAzIiwianRpIjoiYjdjNTMwYzAtOWQwMy00YTJhLThlZGEtOTVk\
-Y2U1NDliNmVhIn0.6EwE-m7eOJAaPbGYz2zR_1-7lvrtFR0rKLykwonZZjo"
-
-def get(rtype = "socket_ip", rip_address = "81.82.81.82", url = 'http://portal-stg.perimeterx.com/report/v1/ip', start_time=1481718521000, end_time=1482928121000, threshold=60):
+rtoken = ""
+url="
+def get(rtype = "socket_ip", rip_address = "81.82.81.82", url, start_time=1481718521000, end_time=1482928121000, threshold=60):
     """Returns the GET response, else throws exception
 
-    >>> get("socket_ip", "81.82.81.82", 'http://portal-stg.perimeterx.com/report/v1/ip', 1481718521000, 1482928121000, 60)
+    >>> get("socket_ip", "81.82.81.82", url, 1481718521000, 1482928121000, 60)
     400
 
-    >>> get("socket_ip", "81.82.81.82", 'http://portal-stg.perimeterx.com/report/v1/ip', 11481718521000, 1482928121000, 60)
+    >>> get("socket_ip", "81.82.81.82", url, 11481718521000, 1482928121000, 60)
     Traceback (most recent call last):
       File "/usr/lib/python2.7/doctest.py", line 1315, in __run
         compileflags, 1) in test.globs
       File "<doctest __main__.get[1]>", line 1, in <module>
-        get("socket_ip", "81.82.81.82", 'http://portal-stg.perimeterx.com/report/v1/ip', 11481718521000, 1482928121000, 60)
+        get("socket_ip", "81.82.81.82", url, 11481718521000, 1482928121000, 60)
       File "third.py", line 35, in get
         if(validate_times(start_time, end_time) and validate_threshold(threshold)):
       File "third.py", line 82, in validate_times
         raise MyError("start_time and end_time - should be valid 13 digits timestamp")
     MyError: 'start_time and end_time - should be valid 13 digits timestamp'
 
-    >>> get("socket_ip", "81.82.81.82", 'http://portal-stg.perimeterx.com/report/v1/ip', 1481718521000, 1482928121000, -555)
+    >>> get("socket_ip", "81.82.81.82", url, 1481718521000, 1482928121000, -555)
     Traceback (most recent call last):
       File "/usr/lib/python2.7/doctest.py", line 1315, in __run
         compileflags, 1) in test.globs
       File "<doctest __main__.get[2]>", line 1, in <module>
-        get("socket_ip", "81.82.81.82", 'http://portal-stg.perimeterx.com/report/v1/ip', 1481718521000, 1482928121000, -555)
+        get("socket_ip", "81.82.81.82", url, 1481718521000, 1482928121000, -555)
       File "third.py", line 56, in get
         if(validate_times(start_time, end_time) and validate_threshold(threshold)):
       File "third.py", line 84, in validate_threshold
