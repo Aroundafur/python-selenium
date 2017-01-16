@@ -1,6 +1,6 @@
 from setuptools import setup
 
-setup(name='perimiterx',
+setup(name='python-selenium',
       version='0.1',
       description='python-selenium example',
       author='Doron Smoliansky',
