@@ -24,8 +24,8 @@ def go_to_checkout():
     """
     driver.get('https://checkout.iherb.com/transactions/checkout')
     form = driver.find_element_by_xpath("//*[@id='login-password-form']")
-    form.find_element_by_xpath(".//*[@id='UserName']").send_keys('test@perimeterx.com')
-    form.find_element_by_xpath(".//*[@id='Password']").send_keys('test@perimeterx.com')
+    form.find_element_by_xpath(".//*[@id='UserName']").send_keys('test@company.com')
+    form.find_element_by_xpath(".//*[@id='Password']").send_keys('test@company.com')
     form.find_element_by_xpath(".//*[@name='save']").click()
 
 
